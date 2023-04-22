@@ -8,6 +8,7 @@ public class ComponentsController: UIViewController, ThemeSwitchable {
     let layout = UICollectionViewFlowLayout()
     layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
     layout.scrollDirection = .vertical
+    layout.minimumLineSpacing = 20
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout).autoLayout()
     collectionView.register(cellType: PrimitiveCell.self)
     collectionView.register(cellType: CardCell.self)

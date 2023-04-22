@@ -49,27 +49,14 @@ public class CardCell: UICollectionViewCell, ThemeObserver, Reusable {
     container.layer.cornerCurve = .continuous
     container.backgroundColor = .clear
 
-    addShadows()
-
     setupLayout()
   }
 
   private func addShadows() {
-    let shadows = UIView()
-    shadows.frame = container.frame
-    shadows.clipsToBounds = false
-    container.addSubview(shadows)
-
-    let shadowPath0 = UIBezierPath(roundedRect: shadows.bounds, cornerRadius: 24)
-    let shadowLayer = CALayer()
-    shadowLayer.shadowPath = shadowPath0.cgPath
-    shadowLayer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.12).cgColor
-    shadowLayer.shadowOpacity = 1
-    shadowLayer.shadowRadius = 34
-    shadowLayer.shadowOffset = CGSize(width: 0, height: 6)
-    shadowLayer.bounds = shadows.bounds
-    shadowLayer.position = shadows.center
-    shadows.layer.addSublayer(shadowLayer)
+    container.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.12).cgColor
+    container.layer.shadowOpacity = 1
+    container.layer.shadowOffset = .init(width: 0, height: 6)
+    container.layer.shadowRadius = 34
   }
 
   public func configure(
@@ -105,11 +92,18 @@ public class CardCell: UICollectionViewCell, ThemeObserver, Reusable {
       labelsToLeading?.isActive = true
       labelsToImage?.isActive = false
     }
+
+    if model.mode == .normal {
+      addShadows()
+    }
   }
 
   internal func setupLayout() {
     container.pinEdgesToSuperview(with: .init(top: 0, left: 16, bottom: 0, right: 16))
 
+    if model?.subtitle == nil {
+      picture.centerYAnchor.constraint(equalTo: container.centerYAnchor).isActive = true
+    }
     picture.pinTo(.top, of: container, with: Constants.padding)
     picture.pinTo(.trailing, of: container, with: -Constants.padding)
     picture.setDimensions(to: Constants.pictureSize)
