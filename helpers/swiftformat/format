@@ -1,0 +1,3 @@
+#!/bin/sh
+
+./helpers/swiftformat/git-format-staged --formatter "./helpers/swiftformat/swiftformat --config './.swiftformat' stdin --stdinpath '{}'" '*.swift'
